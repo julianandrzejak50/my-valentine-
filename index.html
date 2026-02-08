@@ -3,9 +3,10 @@ valentine.html
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Mezaab, Wil You Be My Valentine? 💘</title>
+<title>Mezaab, Will You Be My Valentine? 💘</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<!-- Handwritten font -->
 <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
 
 <style>
@@ -36,17 +37,17 @@ valentine.html
     to { transform: translateY(-120vh); }
   }
 
-  /* burst hearts */
+  /* floating foreground hearts */
   .heart {
     position: absolute;
-    color: rgba(255, 77, 109, 0.75);
-    animation: floatUp 1s ease forwards;
+    color: rgba(255, 77, 109, 0.7);
+    animation: floatUp 8s linear forwards;
     pointer-events: none;
   }
 
   @keyframes floatUp {
-    from { transform: translateY(0) scale(1); opacity: 1; }
-    to { transform: translateY(-120px) scale(1.4); opacity: 0; }
+    from { transform: translateY(0); opacity: 1; }
+    to { transform: translateY(-120px); opacity: 0; }
   }
 
   .container {
@@ -109,15 +110,14 @@ valentine.html
     color: #444;
     margin-top: 20px;
     line-height: 1.6;
-    white-space: pre-line;
   }
 </style>
 </head>
 
 <body>
 
+<!-- background hearts -->
 <script>
-  // background hearts
   for (let i = 0; i < 10; i++) {
     const bg = document.createElement("div");
     bg.className = "bg-heart";
@@ -133,19 +133,23 @@ valentine.html
 
   <img id="catImage" class="cat" src="cat-before.jpg" alt="Cute cat">
 
-  <h1 id="question">Will you be my Valentine? 💖</h1>
+  <h1 id="question">Mezaab, will you be my Valentine? 💖</h1>
 
   <div class="buttons" id="buttons">
     <button id="yes">Yes 💕</button>
     <button id="no">No 😭</button>
   </div>
 
-  <div id="message"></div>
+  <div id="message">
+You wish you could press no hehe 😈... Mezaab you know i love you more than anyone on in this world, i cant put this into words but you make my most ordinary moments feel brighter by being yourself. 
+It would be a honour to spend thsi valentines day with you. and every other one to come.
+ps. i know you pressed that yes button instantly 😉
+  </div>
 
 </div>
 
 <script>
-  // Name from URL
+  // name from URL
   const params = new URLSearchParams(window.location.search);
   const name = params.get("name");
   if (name) {
@@ -157,7 +161,7 @@ valentine.html
   const yesBtn = document.getElementById("yes");
   const catImage = document.getElementById("catImage");
   const buttons = document.getElementById("buttons");
-  const messageEl = document.getElementById("message");
+  const message = document.getElementById("message");
 
   let scale = 1;
 
@@ -169,60 +173,20 @@ valentine.html
   });
 
   function heartBurst() {
-    for (let i = 0; i < 24; i++) {
+    for (let i = 0; i < 20; i++) {
       const heart = document.createElement("div");
       heart.className = "heart";
       heart.textContent = "❤";
-      heart.style.left = 50 + (Math.random() * 140 - 70) + "px";
-      heart.style.top = "55%";
-      heart.style.fontSize = 14 + Math.random() * 22 + "px";
+      heart.style.left = 50 + (Math.random() * 100 - 50) + "px";
+      heart.style.top = "50%";
+      heart.style.fontSize = 16 + Math.random() * 20 + "px";
       document.body.appendChild(heart);
       setTimeout(() => heart.remove(), 1000);
     }
   }
 
-  // Dramatic sound using Web Audio
-  function playDramaticSound() {
-    const ctx = new (window.AudioContext || window.webkitAudioContext)();
-    const osc1 = ctx.createOscillator();
-    const osc2 = ctx.createOscillator();
-    const gain = ctx.createGain();
-
-    osc1.type = "sine";
-    osc2.type = "triangle";
-    osc1.frequency.value = 440;
-    osc2.frequency.value = 660;
-
-    gain.gain.setValueAtTime(0.0001, ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.4, ctx.currentTime + 0.15);
-    gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 1.2);
-
-    osc1.connect(gain);
-    osc2.connect(gain);
-    gain.connect(ctx.destination);
-
-    osc1.start();
-    osc2.start();
-    osc1.stop(ctx.currentTime + 1.2);
-    osc2.stop(ctx.currentTime + 1.2);
-  }
-
-  // Typewriter effect
-  function typeWriter(text, element, speed = 40) {
-    let i = 0;
-    element.textContent = "";
-    element.style.display = "block";
-
-    const interval = setInterval(() => {
-      element.textContent += text.charAt(i);
-      i++;
-      if (i >= text.length) clearInterval(interval);
-    }, speed);
-  }
-
   yesBtn.addEventListener("click", () => {
     heartBurst();
-    playDramaticSound();
 
     catImage.style.opacity = 0;
     setTimeout(() => {
@@ -231,11 +195,7 @@ valentine.html
     }, 300);
 
     buttons.style.display = "none";
-
-    const messageText =
-Oh how you wish you could press no 😔, should have known its not that easy with me 😉. i love you laods mezaab i cannot wait for this special day. and between me and you, i know you pressed that yes instantly 😜. 
-
-    typeWriter(messageText, messageEl);
+    message.style.display = "block";
   });
 </script>
 
