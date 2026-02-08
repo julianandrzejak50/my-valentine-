@@ -6,6 +6,9 @@ valentine.html
 <title>Be My Valentine 💘</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<!-- Handwritten-style font -->
+<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+
 <style>
   * {
     box-sizing: border-box;
@@ -22,7 +25,6 @@ valentine.html
     align-items: center;
   }
 
-  /* floating hearts */
   .heart {
     position: absolute;
     color: rgba(255, 77, 109, 0.6);
@@ -31,29 +33,25 @@ valentine.html
   }
 
   @keyframes floatUp {
-    from {
-      transform: translateY(110vh);
-      opacity: 1;
-    }
-    to {
-      transform: translateY(-10vh);
-      opacity: 0;
-    }
+    from { transform: translateY(110vh); opacity: 1; }
+    to { transform: translateY(-10vh); opacity: 0; }
   }
 
   .container {
     background: white;
-    border-radius: 32px;
+    border-radius: 36px;
     padding: 40px 30px;
-    width: min(90%, 420px);
+    width: min(92%, 440px);
     text-align: center;
     box-shadow: 0 30px 60px rgba(0,0,0,0.12);
-    position: relative;
   }
 
-  img {
-    width: 140px;
-    margin-bottom: 10px;
+  .cat {
+    width: 180px;
+    border-radius: 24px;
+    margin-bottom: 15px;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+    transition: opacity 0.4s ease;
   }
 
   h1 {
@@ -64,12 +62,12 @@ valentine.html
 
   .buttons {
     position: relative;
-    height: 120px;
+    height: 130px;
   }
 
   button {
     font-size: 1.1rem;
-    padding: 14px 26px;
+    padding: 14px 28px;
     border-radius: 999px;
     border: none;
     cursor: pointer;
@@ -79,11 +77,11 @@ valentine.html
   #yes {
     background: #ff4d6d;
     color: white;
-    box-shadow: 0 10px 25px rgba(255, 77, 109, 0.4);
+    box-shadow: 0 10px 25px rgba(255, 77, 109, 0.45);
   }
 
   #no {
-    background: #f0f0f0;
+    background: #f1f1f1;
     color: #666;
     position: absolute;
     left: 55%;
@@ -92,9 +90,11 @@ valentine.html
 
   #message {
     display: none;
-    font-size: 1.25rem;
+    font-family: "Patrick Hand", cursive;
+    font-size: 1.4rem;
     color: #444;
     margin-top: 20px;
+    line-height: 1.5;
   }
 </style>
 </head>
@@ -102,22 +102,25 @@ valentine.html
 <body>
 
 <div class="container" id="container">
-  <img src="https://i.imgur.com/JqEuJ6t.png" alt="Cute cat">
+
+  <!-- Image that will change -->
+  <img id="catImage" class="cat" src="cat-before.jpg" alt="Cute cat">
 
   <h1 id="question">Will you be my Valentine? 💖</h1>
 
-  <div class="buttons">
+  <div class="buttons" id="buttons">
     <button id="yes">Yes 💕</button>
     <button id="no">No 😭</button>
   </div>
 
   <div id="message">
-   Oh how you wish you could press no 😔, you know i could never letyou pick that option you silly thing. i love you loads baby i cant wait 😉
+Oh how you wish you could press no 😔, should have known its not that easy with me😉. i love you laods mezaab i cannot wait for this special day. and between me and you, i know you pressed that yes instantly 😜. 
   </div>
+
 </div>
 
 <script>
-  // get name from URL
+  // Name from URL
   const params = new URLSearchParams(window.location.search);
   const name = params.get("name");
 
@@ -128,14 +131,15 @@ valentine.html
 
   const noBtn = document.getElementById("no");
   const yesBtn = document.getElementById("yes");
-  const container = document.getElementById("container");
+  const catImage = document.getElementById("catImage");
+  const buttons = document.getElementById("buttons");
   const message = document.getElementById("message");
 
   let scale = 1;
 
   noBtn.addEventListener("mouseover", () => {
-    const maxX = container.offsetWidth - noBtn.offsetWidth;
-    const maxY = 100;
+    const maxX = 250;
+    const maxY = 90;
 
     noBtn.style.left = Math.random() * maxX + "px";
     noBtn.style.top = Math.random() * maxY + "px";
@@ -145,21 +149,28 @@ valentine.html
   });
 
   yesBtn.addEventListener("click", () => {
-    document.querySelector(".buttons").style.display = "none";
+    catImage.style.opacity = 0;
+
+    setTimeout(() => {
+      catImage.src = "cat-after.jpg";
+      catImage.style.opacity = 1;
+    }, 300);
+
+    buttons.style.display = "none";
     message.style.display = "block";
   });
 
-  // hearts generator
+  // Floating hearts
   setInterval(() => {
     const heart = document.createElement("div");
     heart.className = "heart";
     heart.innerHTML = "❤";
     heart.style.left = Math.random() * 100 + "vw";
-    heart.style.fontSize = Math.random() * 16 + 12 + "px";
+    heart.style.fontSize = Math.random() * 18 + 12 + "px";
     document.body.appendChild(heart);
 
     setTimeout(() => heart.remove(), 8000);
-  }, 400);
+  }, 450);
 </script>
 
 </body>
